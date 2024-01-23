@@ -38,6 +38,8 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     let dropdown = d3.select(this.parentNode).select("ul.dropdown");
     dropdown.classed("hidden", !dropdown.classed("hidden"));
   });
+
+
   var margin = { top: 30, right: 150, bottom: 30, left: 50 },
     width =
       d3.select("#chart-1").node().getBoundingClientRect().width -
@@ -152,6 +154,8 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     })
     .entries(init_data);
 
+    console.log(sumstat);
+
   var linepath1 = d3
     .line()
     .x(function (d) {
@@ -171,36 +175,36 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     });
 
   // Додавання ліній до першого графіку
-  first_chart
-    .selectAll(".line")
-    .data(sumstat)
-    .enter()
-    .append("path")
-    .attr("class", "line")
-    .attr("d", function (d) {
-      return linepath1(d.values);
-    })
-    .attr("fill", "none")
-    .style("stroke", function (d) {
-      return color(d.key);
-    })
-    .style("stroke-width", "1px");
+  // first_chart
+  //   .selectAll(".line")
+  //   .data(sumstat)
+  //   .enter()
+  //   .append("path")
+  //   .attr("class", "line")
+  //   .attr("d", function (d) {
+  //     return linepath1(d.values);
+  //   })
+  //   .attr("fill", "none")
+  //   .style("stroke", function (d) {
+  //     return color(d.key);
+  //   })
+  //   .style("stroke-width", "1px");
 
   // Додавання ліній до другого графіку
-  second_chart
-    .selectAll(".line")
-    .data(sumstat)
-    .enter()
-    .append("path")
-    .attr("class", "line")
-    .attr("d", function (d) {
-      return linepath2(d.values);
-    })
-    .attr("fill", "none")
-    .style("stroke", function (d) {
-      return color(d.key);
-    })
-    .style("stroke-width", "1px");
+  // second_chart
+  //   .selectAll(".line")
+  //   .data(sumstat)
+  //   .enter()
+  //   .append("path")
+  //   .attr("class", "line")
+  //   .attr("d", function (d) {
+  //     return linepath2(d.values);
+  //   })
+  //   .attr("fill", "none")
+  //   .style("stroke", function (d) {
+  //     return color(d.key);
+  //   })
+  //   .style("stroke-width", "1px");
 
   function adjustLabelPosition(labels, labelSpacing) {
     var overlap;
@@ -275,85 +279,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     .style("padding", 6)
     .style("display", "none");
 
-  function createMouseOverEffects(chart, sumstat, xScale, yScale, valueField) {
-    var mouseG = chart.append("g").attr("class", "mouse-over-effects");
-
-    mouseG
-      .append("path")
-      .attr("class", "mouse-line")
-      .style("stroke", "#A9A9A9")
-      .style("stroke-width", "1px")
-      .style("opacity", "0");
-
-    var mousePerLine = mouseG
-      .selectAll(".mouse-per-line")
-      .data(sumstat)
-      .enter()
-      .append("g")
-      .attr("class", "mouse-per-line");
-
-    mousePerLine
-      .append("circle")
-      .attr("r", 4)
-      .style("stroke", function (d) {
-        return color(d.key);
-      })
-      .style("fill", "none")
-      .style("stroke-width", "1px")
-      .style("opacity", "0");
-
-    mousePerLine.append("text").attr("dx", 10).attr("dy", ".35em");
-
-    mouseG
-      .append("svg:rect")
-      .attr("width", width)
-      .attr("height", singleHeight)
-      .attr("fill", "none")
-      .attr("pointer-events", "all")
-      .on("mouseout", function () {
-        d3.select(".mouse-line").style("opacity", "0");
-        d3.selectAll(".mouse-per-line circle").style("opacity", "0");
-        d3.selectAll(".mouse-per-line text").style("opacity", "0");
-        d3.select("#tooltip").style("display", "none");
-      })
-      .on("mouseover", function () {
-        d3.select(".mouse-line").style("opacity", "1");
-        d3.selectAll(".mouse-per-line circle").style("opacity", "1");
-        d3.selectAll(".mouse-per-line text").style("opacity", "1");
-        d3.select("#tooltip").style("display", "block");
-      })
-      .on("mousemove", function (event) {
-        var mouse = d3.mouse(this);
-        var mouseX = mouse[0];
-        var mouseY = mouse[1];
-
-        mousePerLine.attr("transform", function (d, i) {
-          var xDate = xScale.invert(mouseX);
-          var idx = bisect(d.values, xDate);
-          if (idx >= d.values.length || idx < 0) return;
-
-          var dataPoint = d.values[idx];
-          var tooltipText =
-            d3.timeFormat("%Y-%m-%d")(dataPoint.date) +
-            ": " +
-            dataPoint[valueField];
-
-          d3.select(this)
-            .select("text")
-            .text(tooltipText)
-            .style("opacity", "1")
-            .style("fill", color(d.key));
-
-          return (
-            "translate(" +
-            xScale(dataPoint.date) +
-            "," +
-            yScale(dataPoint[valueField]) +
-            ")"
-          );
-        });
-      });
-  }
 
   // Виклик функції для створення інтерактивних ефектів для обох графіків
   // createMouseOverEffects(first_chart, sumstat, x, y1, "budget");
@@ -406,7 +331,10 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       groups.exit().remove();
 
       // Add new elements
-      var newGroups = groups.enter().append("g").attr("class", "group");
+      var newGroups = groups
+        .enter()
+        .append("g")
+        .attr("class", "group");
 
       newGroups
         .append("path")
@@ -415,6 +343,7 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
         .style("stroke-width", "1px");
 
       newGroups.append("text");
+
 
       // Update existing elements
       var allLines = groups.select(".line").merge(newGroups.select(".line"));
@@ -453,6 +382,8 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
         });
     }
   }
+
+  updateData(default_level)
 
   function createTooltips(
     first_chart,
