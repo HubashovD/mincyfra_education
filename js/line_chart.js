@@ -39,6 +39,35 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     dropdown.classed("hidden", !dropdown.classed("hidden"));
   });
 
+  function updateLegend(levels) {
+    // Перевірка наявності елементів і їхнє оновлення або видалення
+    var p = d3.select("#legend").selectAll("p.auto-added").data(levels);
+
+    p.enter()
+      .append("p")
+      .attr("class", "auto-added")
+      .merge(p)
+      .text(function (d) {
+        return d;
+      })
+      .style("color", function (d) {
+        return color(d);
+      });
+
+    p.exit().remove();
+  }
+  // d3.select("#legend")
+  //   .selectAll("p.auto-added")
+  //   .data(levels)
+  //   .enter()
+  //   .append("p")
+  //   .attr("class", "auto-added")
+  //   .text(function (d) {
+  //     return d;
+  //   })
+  //   .style("color", function (d) {
+  //     return color(d);
+  //   }); // Встановлюємо колір тексту
 
   var margin = { top: 30, right: 150, bottom: 30, left: 50 },
     width =
@@ -154,7 +183,7 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     })
     .entries(init_data);
 
-    console.log(sumstat);
+  console.log(sumstat);
 
   var linepath1 = d3
     .line()
@@ -173,38 +202,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     .y(function (d) {
       return y2(d.contract);
     });
-
-  // Додавання ліній до першого графіку
-  // first_chart
-  //   .selectAll(".line")
-  //   .data(sumstat)
-  //   .enter()
-  //   .append("path")
-  //   .attr("class", "line")
-  //   .attr("d", function (d) {
-  //     return linepath1(d.values);
-  //   })
-  //   .attr("fill", "none")
-  //   .style("stroke", function (d) {
-  //     return color(d.key);
-  //   })
-  //   .style("stroke-width", "1px");
-
-  // Додавання ліній до другого графіку
-  // second_chart
-  //   .selectAll(".line")
-  //   .data(sumstat)
-  //   .enter()
-  //   .append("path")
-  //   .attr("class", "line")
-  //   .attr("d", function (d) {
-  //     return linepath2(d.values);
-  //   })
-  //   .attr("fill", "none")
-  //   .style("stroke", function (d) {
-  //     return color(d.key);
-  //   })
-  //   .style("stroke-width", "1px");
 
   function adjustLabelPosition(labels, labelSpacing) {
     var overlap;
@@ -230,35 +227,33 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     colorScale,
     labelSpacing
   ) {
-    var labels = data.map(function (d) {
-      var lastPointIndex = d.values.length - 1;
-      var lastPoint = d.values[lastPointIndex];
-      return {
-        key: d.key,
-        x: xScale(maxDate) + 5,
-        y: yScale(lastPoint[valueField]),
-        color: colorScale(d.key),
-      };
-    });
-
-    adjustLabelPosition(labels, labelSpacing);
-
-    chart
-      .selectAll(".label")
-      .data(labels)
-      .enter()
-      .append("text")
-      .attr("class", "label")
-      .attr("transform", function (d) {
-        return "translate(" + d.x + "," + d.y + ")";
-      })
-      .attr("dy", ".35em")
-      .style("fill", function (d) {
-        return d.color;
-      })
-      .text(function (d) {
-        return d.key;
-      });
+    // var labels = data.map(function (d) {
+    //   var lastPointIndex = d.values.length - 1;
+    //   var lastPoint = d.values[lastPointIndex];
+    //   return {
+    //     key: d.key,
+    //     x: xScale(maxDate) + 5,
+    //     y: yScale(lastPoint[valueField]),
+    //     color: colorScale(d.key),
+    //   };
+    // });
+    // adjustLabelPosition(labels, labelSpacing);
+    // chart
+    //   .selectAll(".label")
+    //   .data(labels)
+    //   .enter()
+    //   .append("text")
+    //   .attr("class", "label")
+    //   .attr("transform", function (d) {
+    //     return "translate(" + d.x + "," + d.y + ")";
+    //   })
+    //   .attr("dy", ".35em")
+    //   .style("fill", function (d) {
+    //     return d.color;
+    //   })
+    //   .text(function (d) {
+    //     return d.key;
+    //   });
   }
 
   var labelSpacing = 20; // Відстань між підписами
@@ -279,13 +274,41 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     .style("padding", 6)
     .style("display", "none");
 
-
   // Виклик функції для створення інтерактивних ефектів для обох графіків
   // createMouseOverEffects(first_chart, sumstat, x, y1, "budget");
   // createMouseOverEffects(second_chart, sumstat, x, y2, "contract");
 
   function updateData(level) {
     var filteredData = input[0].filter((d) => d.level === level);
+
+    levels = Array.from(new Set(filteredData.map((d) => d.base))).sort();
+
+    updateLegend(levels);
+
+    console.log(d3.select("#chart-1").node().getBoundingClientRect().width);
+
+    var margin = { top: 30, right: 150, bottom: 30, left: 50 },
+      width =
+        d3.select("#chart-1").node().getBoundingClientRect().width -
+        margin.left -
+        margin.right,
+      height = 700 - 50 - margin.top - margin.bottom,
+      singleHeight = (height - 50) / 2;
+
+    d3.select("#chart-1")
+      .select("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom);
+
+    first_chart.attr(
+      "transform",
+      "translate(" + margin.left + "," + margin.top + ")"
+    );
+
+    second_chart.attr(
+      "transform",
+      "translate(" + margin.left + "," + (margin.top + singleHeight + 50) + ")"
+    );
 
     sumstat = d3
       .nest()
@@ -294,21 +317,38 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       })
       .entries(filteredData);
 
+    var x = d3.scaleTime().range([0, width]),
+      y1 = d3.scaleLinear().range([singleHeight, 0]),
+      y2 = d3.scaleLinear().range([singleHeight, 0]);
+
     x.domain(d3.extent(filteredData, (d) => d.date));
     y1.domain([0, d3.max(filteredData, (d) => d.budget)]);
     y2.domain([0, d3.max(filteredData, (d) => d.contract)]);
 
-    first_chart.selectAll(".x.axis").transition().duration(750).call(xAxis);
-    first_chart.selectAll(".y.axis").transition().duration(750).call(yAxisLeft);
-    second_chart.selectAll(".x.axis").transition().duration(750).call(xAxis);
+    var xAxis = d3
+        .axisBottom(x)
+        .ticks(10)
+        .tickFormat(multiFormat)
+        .tickSize(-singleHeight),
+      yAxisLeft = d3
+        .axisLeft(y1)
+        .ticks(5)
+        .tickFormat(nFormatter)
+        .tickSize(-width),
+      yAxisRight = d3
+        .axisLeft(y2)
+        .ticks(5)
+        .tickFormat(nFormatter)
+        .tickSize(-width);
+
+    first_chart.selectAll(".x.axis").transition().duration(100).call(xAxis);
+    first_chart.selectAll(".y.axis").transition().duration(100).call(yAxisLeft);
+    second_chart.selectAll(".x.axis").transition().duration(100).call(xAxis);
     second_chart
       .selectAll(".y.axis")
       .transition()
       .duration(750)
       .call(yAxisRight);
-
-    updateChart(first_chart, sumstat, linepath1, y1, "budget");
-    updateChart(second_chart, sumstat, linepath2, y2, "contract");
 
     // updateTooltips(first_chart, sumstat, x, y1, "budget");
     // updateTooltips(second_chart, sumstat, x, y2, "contract");
@@ -324,66 +364,83 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       "contract"
     );
 
-    function updateChart(chart, data, linePath, yScale, valueField) {
-      var groups = chart.selectAll(".group").data(data);
+    var linepath1 = d3
+      .line()
+      .x(function (d) {
+        return x(d.date);
+      })
+      .y(function (d) {
+        return y1(d.budget);
+      });
 
-      // Remove old elements
-      groups.exit().remove();
+    var linepath2 = d3
+      .line()
+      .x(function (d) {
+        return x(d.date);
+      })
+      .y(function (d) {
+        return y2(d.contract);
+      });
 
-      // Add new elements
-      var newGroups = groups
-        .enter()
-        .append("g")
-        .attr("class", "group");
-
-      newGroups
-        .append("path")
-        .attr("class", "line")
-        .attr("fill", "none")
-        .style("stroke-width", "1px");
-
-      newGroups.append("text");
-
-
-      // Update existing elements
-      var allLines = groups.select(".line").merge(newGroups.select(".line"));
-      allLines
-        .transition()
-        .duration(750)
-        .attr("d", function (d) {
-          return linePath(d.values);
-        })
-        .style("stroke", function (d) {
-          return color(d.key);
-        });
-
-      var allTexts = groups.select("text").merge(newGroups.select("text"));
-      allTexts
-        .transition()
-        .duration(750)
-        .attr("transform", function (d) {
-          var lastPointIndex = d.values.length - 1;
-          var lastPoint = d.values[lastPointIndex];
-          return (
-            "translate(" +
-            x(lastPoint.date) +
-            "," +
-            yScale(lastPoint[valueField]) +
-            ")"
-          );
-        })
-        .attr("dy", ".35em")
-        .attr("dx", ".35em")
-        .style("fill", function (d) {
-          return color(d.key);
-        })
-        .text(function (d) {
-          return d.key;
-        });
-    }
+    updateChart(first_chart, sumstat, linepath1, y1, "budget");
+    updateChart(second_chart, sumstat, linepath2, y2, "contract");
   }
 
-  updateData(default_level)
+  function updateChart(chart, data, linePath, yScale, valueField) {
+    var groups = chart.selectAll(".group").data(data);
+
+    // Remove old elements
+    groups.exit().remove();
+
+    // Add new elements
+    var newGroups = groups.enter().append("g").attr("class", "group");
+
+    newGroups
+      .append("path")
+      .attr("class", "line")
+      .attr("fill", "none")
+      .style("stroke-width", "2px");
+
+    newGroups.append("text");
+
+    // Update existing elements
+    var allLines = groups.select(".line").merge(newGroups.select(".line"));
+    allLines
+      .transition()
+      .duration(750)
+      .attr("d", function (d) {
+        return linePath(d.values);
+      })
+      .style("stroke", function (d) {
+        return color(d.key);
+      });
+
+    // var allTexts = groups.select("text").merge(newGroups.select("text"));
+    // allTexts
+    //   .transition()
+    //   .duration(750)
+    //   .attr("transform", function (d) {
+    //     var lastPointIndex = d.values.length - 1;
+    //     var lastPoint = d.values[lastPointIndex];
+    //     return (
+    //       "translate(" +
+    //       x(lastPoint.date) +
+    //       "," +
+    //       yScale(lastPoint[valueField]) +
+    //       ")"
+    //     );
+    //   })
+    //   .attr("dy", ".35em")
+    //   .attr("dx", ".35em")
+    //   .style("fill", function (d) {
+    //     return color(d.key);
+    //   })
+    //   .text(function (d) {
+    //     return d.key;
+    //   });
+  }
+
+  updateData(default_level);
 
   function createTooltips(
     first_chart,
@@ -445,24 +502,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
         }
       });
     }
-    // function updateTooltips(chart, xScale, yScale, valueField, mouseX) {
-    //   chart.selectAll(".mouse-per-line").attr("transform", function (d) {
-    //     var xDate = xScale.invert(mouseX);
-    //     var idx = bisect(d.values, xDate);
-    //     if (idx >= d.values.length || idx < 0) return;
-
-    //     var dataPoint = d.values[idx];
-    //     d3.select(this).select("text").text(dataPoint[valueField]);
-
-    //     return (
-    //       "translate(" +
-    //       xScale(dataPoint.date) +
-    //       "," +
-    //       yScale(dataPoint[valueField]) +
-    //       ")"
-    //     );
-    //   });
-    // }
 
     function setupTooltip(chart, data, xScale, yScale, valueField) {
       chart.selectAll(".mouse-over-effects").remove();

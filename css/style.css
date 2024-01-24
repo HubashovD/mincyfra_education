@@ -1553,4 +1553,22 @@ rect.selection {
   margin: 0 auto 0 auto;
 }
 
+#legend {
+  font-family: "e-Ukraine-Light";
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  max-width: 70dvw;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 15dvw;
+}
+#legend p {
+  margin: 0;
+  padding: 0;
+  margin-right: 20px;
+  max-width: calc(100% / 7);
+}
+
 /*# sourceMappingURL=style.css.map */
