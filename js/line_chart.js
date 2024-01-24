@@ -350,6 +350,30 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       .duration(750)
       .call(yAxisRight);
 
+    // Стилізація ліній сітки для осі X
+    first_chart
+      .selectAll(".x.axis .tick line")
+      .attr("stroke", "#ccc") // сірий колір
+      .attr("stroke-width", 1); // товщина 1px
+
+    // Стилізація ліній сітки для осі Y
+    first_chart
+      .selectAll(".y.axis .tick line")
+      .attr("stroke", "#ccc") // сірий колір
+      .attr("stroke-width", 1); // товщина 1px
+
+    // Стилізація ліній сітки для осі X
+    second_chart
+      .selectAll(".x.axis .tick line")
+      .attr("stroke", "#ccc") // сірий колір
+      .attr("stroke-width", 1); // товщина 1px
+
+    // Стилізація ліній сітки для осі Y
+    second_chart
+      .selectAll(".y.axis .tick line")
+      .attr("stroke", "#ccc") // сірий колір
+      .attr("stroke-width", 1); // товщина 1px
+
     // updateTooltips(first_chart, sumstat, x, y1, "budget");
     // updateTooltips(second_chart, sumstat, x, y2, "contract");
 
