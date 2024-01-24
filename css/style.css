@@ -1571,4 +1571,6 @@ rect.selection {
   max-width: calc(100% / 7);
 }
 
-/*# sourceMappingURL=style.css.map */
+#second-regions {
+  display: none;
+}
