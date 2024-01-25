@@ -56,20 +56,8 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
 
     p.exit().remove();
   }
-  // d3.select("#legend")
-  //   .selectAll("p.auto-added")
-  //   .data(levels)
-  //   .enter()
-  //   .append("p")
-  //   .attr("class", "auto-added")
-  //   .text(function (d) {
-  //     return d;
-  //   })
-  //   .style("color", function (d) {
-  //     return color(d);
-  //   }); // Встановлюємо колір тексту
 
-  var margin = { top: 30, right: 150, bottom: 30, left: 50 },
+  var margin = { top: 30, right: 50, bottom: 30, left: 50 },
     width =
       d3.select("#chart-1").node().getBoundingClientRect().width -
       margin.left -
@@ -110,12 +98,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       .append("g")
       .attr("class", "first_chart")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-    // first_chart
-    //   .append("g")
-    //   .attr("class", "grid")
-    //   .attr("transform", "translate(0," + singleHeight + ")")
-    //   .call(xAxis);
 
     var second_chart = svg
       .append("g")
@@ -218,52 +200,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     } while (overlap);
   }
 
-  function addLabels(
-    chart,
-    data,
-    xScale,
-    yScale,
-    valueField,
-    colorScale,
-    labelSpacing
-  ) {
-    // var labels = data.map(function (d) {
-    //   var lastPointIndex = d.values.length - 1;
-    //   var lastPoint = d.values[lastPointIndex];
-    //   return {
-    //     key: d.key,
-    //     x: xScale(maxDate) + 5,
-    //     y: yScale(lastPoint[valueField]),
-    //     color: colorScale(d.key),
-    //   };
-    // });
-    // adjustLabelPosition(labels, labelSpacing);
-    // chart
-    //   .selectAll(".label")
-    //   .data(labels)
-    //   .enter()
-    //   .append("text")
-    //   .attr("class", "label")
-    //   .attr("transform", function (d) {
-    //     return "translate(" + d.x + "," + d.y + ")";
-    //   })
-    //   .attr("dy", ".35em")
-    //   .style("fill", function (d) {
-    //     return d.color;
-    //   })
-    //   .text(function (d) {
-    //     return d.key;
-    //   });
-  }
-
-  var labelSpacing = 20; // Відстань між підписами
-
-  // Додавання підписів для першого графіка
-  addLabels(first_chart, sumstat, x, y1, "budget", color, labelSpacing);
-
-  // Додавання підписів для другого графіка
-  addLabels(second_chart, sumstat, x, y2, "contract", color, labelSpacing);
-
   // CREATE HOVER TOOLTIP WITH VERTICAL LINE //
   tooltip = d3
     .select("#chart-1")
@@ -273,10 +209,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     .style("background-color", "#D3D3D3")
     .style("padding", 6)
     .style("display", "none");
-
-  // Виклик функції для створення інтерактивних ефектів для обох графіків
-  // createMouseOverEffects(first_chart, sumstat, x, y1, "budget");
-  // createMouseOverEffects(second_chart, sumstat, x, y2, "contract");
 
   function updateData(level) {
     var filteredData = input[0].filter((d) => d.level === level);
@@ -438,30 +370,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       .style("stroke", function (d) {
         return color(d.key);
       });
-
-    // var allTexts = groups.select("text").merge(newGroups.select("text"));
-    // allTexts
-    //   .transition()
-    //   .duration(750)
-    //   .attr("transform", function (d) {
-    //     var lastPointIndex = d.values.length - 1;
-    //     var lastPoint = d.values[lastPointIndex];
-    //     return (
-    //       "translate(" +
-    //       x(lastPoint.date) +
-    //       "," +
-    //       yScale(lastPoint[valueField]) +
-    //       ")"
-    //     );
-    //   })
-    //   .attr("dy", ".35em")
-    //   .attr("dx", ".35em")
-    //   .style("fill", function (d) {
-    //     return color(d.key);
-    //   })
-    //   .text(function (d) {
-    //     return d.key;
-    //   });
   }
 
   updateData(default_level);
@@ -500,8 +408,8 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
         tooltips.forEach(function (t) {
           if (Math.abs(t.y - yPosition) < 20) {
             // 20 - мінімальна відстань між текстами
-            yPosition = t.y < yPosition ? yPosition + 20 : yPosition - 20; // Зсув тексту вгору або вниз
-            // xPosition = t.x < xPosition ? xPosition + 20 : xPosition - 20; // Зсув тексту вліво або вправо
+            yPosition = t.y < yPosition ? yPosition + 40 : yPosition - 40; // Зсув тексту вгору або вниз
+            xPosition = t.x < xPosition ? xPosition + 10 : xPosition - 10; // Зсув тексту вліво або вправо
           }
           yPosition = yPosition - 7;
         });
@@ -510,6 +418,12 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
         if (dataPoint[valueField] !== 0) {
           text
             .text(dataPoint[valueField])
+            .style("stroke", "white") // Більш темний відтінок сірого
+            .style("stroke-width", "5px") // Збільшена товщина обводки
+            .style("stroke-opacity", "0.5") // Збільшена прозорість обводки
+            .style("paint-order", "stroke") // Визначає порядок рендерингу: спочатку обводка
+            .style("stroke-linejoin", "round") // Закруглені кути обводки
+            .style("stroke-linecap", "round") // Закруглені кінці обводки
             .attr("transform", "translate(" + xPosition + "," + yPosition + ")")
             .style("fill", colorScale(d.key)); // Встановлення кольору тексту
 
@@ -568,11 +482,15 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
           d3.selectAll(".mouse-line").style("opacity", "0");
           d3.selectAll(".mouse-per-line circle").style("opacity", "0");
           d3.selectAll(".mouse-per-line text").style("opacity", "0");
+          d3.selectAll(".tooltip-background").remove(); // Видалення фону тултіпу
         })
         .on("mouseover", function () {
           d3.selectAll(".mouse-line").style("opacity", "1");
           d3.selectAll(".mouse-per-line circle").style("opacity", "1");
-          d3.selectAll(".mouse-per-line text").style("opacity", "1");
+          d3.selectAll(".mouse-per-line text")
+            .style("opacity", "1")
+            .style("stroke", "lightgray") // Колір обводки
+            .style("stroke-width", "1px"); // Товщина обводки
         })
         .on("mousemove", function (event) {
           // var mouseX = d3.pointer(event, this)[0];

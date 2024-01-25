@@ -54,7 +54,7 @@ const createLollipopChart = function (
 
   h = (20 + 20 * 0.3) * dataset.length + 32;
 
-  padding =
+  var padding =
     box.node().parentNode.getBoundingClientRect().width >= 768 && c2
       ? { left: 48, right: 48, top: 16, bottom: yPadding }
       : { left: 8, right: 48, top: 16, bottom: yPadding };
@@ -88,8 +88,7 @@ const createLollipopChart = function (
 
     if (drawLabels) {
       svgLabels = d3
-        .select(box.node().parentNode)
-        .select(".labels-region")
+        .selectAll(".labels-region")
         .append("svg")
         .attr("width", "100%")
         .attr("height", h);
@@ -286,8 +285,8 @@ const createLollipopChart = function (
 
     if (drawLabels) {
       svgLabels = d3
-        .select(box.node().parentNode)
-        .select(".labels-region")
+        // .select(box.node().parentNode)
+        .selectAll(".labels-region")
         .select("svg");
       svgLabels.attr("height", h);
 
@@ -559,26 +558,6 @@ const sanCompareChart2 = function () {
       dropdown.classed("hidden", !dropdown.classed("hidden"));
     });
 
-    // optionsBlock = d3
-    //   .select(".region-choice-container#s2")
-    //   .select(".region-options");
-    // optionsBlock
-    //   .selectAll("div")
-    //   .data(regions)
-    //   .enter()
-    //   .append("div")
-    //   .attr("class", "r-val")
-    //   .text((d) => d);
-
-    // d3.select(".region-choice-container#s2")
-    //   .select(".region-choice")
-    //   .on("click", function () {
-    //     optionsBlock = d3
-    //       .select(".region-choice-container#s2")
-    //       .select(".region-options");
-    //     optionsBlock.node().classList.toggle("active");
-    //   });
-
     boxLeft = d3.select(".solid-san-grid#ssg2 .tot_records");
     createLollipopChart(
       defaultRegionData,
@@ -612,20 +591,6 @@ const sanCompareChart2 = function () {
       .on("click", function () {
         let regionSelected = d3.select(this).text();
         d3.select("span#selected-region-2").text(regionSelected);
-        // updateData(clicked_level);
-        // });
-
-        // d3.select(".region-choice-container#s2")
-        //   .select(".region-options")
-        //   .selectAll(".r-val")
-        //   .on("click", function () {
-        //     this.parentNode.classList.toggle("active");
-
-        //     regionSelected = this.textContent;
-        //     d3.select(".region-choice-container#s2")
-        //       .select(".region-filter text")
-        //       .text(regionSelected);
-
         boxLeft = d3.select(".solid-san-grid#ssg2 .tot_records");
         boxRight = d3.select(".solid-san-grid#ssg2 .tot_usbl_vol");
 
@@ -659,6 +624,45 @@ const sanCompareChart2 = function () {
           (yPadding = 32)
         );
       });
+
+    window.addEventListener("resize", function () {
+      // let regionSelected = d3.select(this).text();
+      let regionSelected = d3.select("span#selected-region-2").text();
+      // console.log(regionSelected);
+      d3.select("span#selected-region-2").text(regionSelected);
+      boxLeft = d3.select(".solid-san-grid#ssg2 .tot_records");
+      boxRight = d3.select(".solid-san-grid#ssg2 .tot_usbl_vol");
+
+      regionData = data.filter((d) => d["region"] === regionSelected);
+      regionData.sort(function (a, b) {
+        return b["tot_records"] - a["tot_records"];
+      });
+
+      createLollipopChart(
+        regionData,
+        boxLeft,
+        "user_company",
+        "tot_records",
+        undefined,
+        true,
+        (textAnchor = "start"),
+        (drawLabels = true),
+        (smooth = true),
+        (yPadding = 32)
+      );
+      createLollipopChart(
+        regionData,
+        boxRight,
+        "user_company",
+        "tot_usbl_vol",
+        undefined,
+        true,
+        (textAnchor = "start"),
+        (drawLabels = false),
+        (smooth = false),
+        (yPadding = 32)
+      );
+    });
   });
 };
 

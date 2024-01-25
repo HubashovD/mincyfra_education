@@ -1574,3 +1574,40 @@ rect.selection {
 #second-regions {
   display: none;
 }
+
+.hidden-legend {
+  display: none;
+}
+
+.hidden-label {
+  display: none;
+}
+
+/* Стилі для мобільних пристроїв, де всі блоки в один стовпчик */
+@media (max-width: 800px) {
+  #legend {
+    display: block;
+  }
+  .hidden-legend {
+    display: block;
+    margin-top: 400px;
+  }
+
+  .tot_usbl_vol {
+  }
+
+  .solid-san-grid {
+    grid-template-columns: 1fr 3fr;
+    margin-left: 30px;
+  }
+  .hidden-label {
+    display: block;
+  }
+  .descktop-hidden {
+    display: none;
+  }
+}
+
+/* .graph {
+  width: 100%;
+} */
