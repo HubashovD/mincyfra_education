@@ -52,7 +52,7 @@ const createLollipopChart = function (
   w = box.node().getBoundingClientRect().width;
   // h = box.node().getBoundingClientRect().height
 
-  h = (20 + 20 * 0.3) * dataset.length + 32;
+  h = (20 + 20 * 0.3) * dataset.length + 50;
 
   var padding =
     box.node().parentNode.getBoundingClientRect().width >= 768 && c2
@@ -74,7 +74,7 @@ const createLollipopChart = function (
   let xAxis = d3
     .axisBottom()
     .scale(xScale)
-    .ticks(c1 === "tot_usbl_vol" ? 3 : 5)
+    .ticks(c1 === "tot_usbl_vol" ? 1 : 5)
     .tickSize(0);
 
   let yScale = d3
@@ -156,9 +156,6 @@ const createLollipopChart = function (
           .data(dataset)
           .append("text")
           .attr("class", circleClass)
-          // .text(d => Math.round(d[c]))
-          // .text(d => Math.round10(d[c]))
-          // .text(d => (c1 == "tot_usbl_vol.san") ? d[c].toFixed(1) : Math.round(d[c]))
           .text((d) => d[c].toFixed(1))
           .style("font-size", "10")
           .attr("x", (d) => xScale(d[c]))
@@ -219,14 +216,6 @@ const createLollipopChart = function (
         });
     }
 
-    // d3.select(box.node().parentNode).select(".axis-box").append("svg")
-    //     .attr("width", w)
-    //     .attr("height", 48)
-    //     .append("g")
-    //     .attr("class", "axis x")
-    //     .transition().duration(800)
-    //     .call(xAxis)
-
     svg
       .append("g")
       .attr("class", "axis x")
@@ -261,7 +250,12 @@ const createLollipopChart = function (
     svg
       .select(".axis.x")
       .attr("transform", "translate(0," + (h - padding.bottom + 4) + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll(".tick text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-45)");
 
     if (c1 == "tot_usbl_vol.san") {
       svg

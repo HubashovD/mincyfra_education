@@ -68,17 +68,14 @@
     </header>
 
     <main id="main">
-      <div class="text">
+      <div class="text lead">
         <p>
-          Уряд готує масштабну реформу ринку деревини. Міндовкілля пропонує
-          лісгоспам продавати необроблену деревину виключно через відкриті
-          електронні аукціони. Це зробить ринок прозорішим та зручнішим для
-          всіх, а також виведе значні суми коштів із тіні. Минулого року уряд
-          запустив «пілот» цієї реформи, зобов’язавши великі лісгоспи
-          реалізувати щонайменше 25% від своєї лісозаготівлі через відкриті
-          аукціони системи Prozorro.Продажі. У цьому проекті ми аналізуємо
-          відкриті дані Prozorro.Продажі та розповідаємо наскільки успішним був
-          урядовий експеримент із запуску відкритих електронних торгів.
+          Мета проєкту: на основі аналізу відкритих даних Єдиної державної
+          електронної бази з питань освіти (ЄДЕБО) проаналізувати інформацію про
+          вступників до українських вишів після повномасштабного вторгнення.
+          Аналіз відкритих даних, зокрема дані щодо вступників до вищих
+          навчальних закладів, допомагає краще зрозуміти, як влаштована система
+          вступу в Україні, а також вказує на тенденції у цій сфері.
         </p>
       </div>
       <div class="hr"></div>
@@ -90,26 +87,12 @@
           </div>
         </div>
         <div class="stats-cell">
-          <div class="stats-number">58%</div>
-          <div class="stats-label">
-            доцентів, викладачів та професорів приватних ЗВО - сумісники
-          </div>
-        </div>
-        <div class="stats-cell">
-          <div class="stats-number"><span>106</span></div>
-          <div class="stats-label">самостійних приватних ЗВО в Україні</div>
-        </div>
-        <div class="stats-cell">
           <div class="stats-number">8.3%</div>
           <div class="stats-label">студентів навчаються в приватних ЗВО</div>
         </div>
         <div class="stats-cell">
           <div class="stats-number">1.2</div>
           <div class="stats-label">мільйона студентів в Україні</div>
-        </div>
-        <div class="stats-cell">
-          <div class="stats-number">000</div>
-          <div class="stats-label">тут картка показника</div>
         </div>
       </div>
       <div class="text">
@@ -160,10 +143,9 @@
         </p>
 
         <div class="description collapsible" style="">
-          <!--щапка-->
           <div class="collaps-header">
             <img class="finger-icon" src="img/finger_up.png" />
-            <p>Що таке Prozorro.Продажі?</p>
+            <p>Що таке ЄДЕБО?</p>
             <div class="circle-plus closed">
               <div class="circle">
                 <div class="horizontal"></div>
@@ -171,14 +153,26 @@
               </div>
             </div>
           </div>
-
           <p
             class="ordinal height-0"
             style="max-height: 1px; overflow: hidden; margin: 5px 0"
           >
-            Це державна електронна система, основна мета якої – забезпечувати
-            прозорий розподіл державного (або комунального) майна через аукціони
-            на понад кількох десятках комерційних торгових майданчиків.
+            Єдина державна електронна база з питань освіти (ЄДЕБО) є
+            автоматизованою системою збирання, реєстрації, оброблення,
+            зберігання та захисту відомостей та даних з питань освіти.
+            Розпорядником бази є Міністерство освіти і науки України, а
+            технічним адміністратором — державне підприємство «Інфоресурс». З
+            2012 року ЄДЕБО забезпечує інформаційне супроводження вступної
+            кампанії до закладів вищої освіти. 2014 року заклади освіти почали
+            використовувати дані ЄДЕБО для виготовлення студентських
+            (учнівських) квитків державного зразка. З 2015 року виготовлення
+            документів про вищу та професійну (професійно-технічну) освіту
+            відбувається на підставі даних Єдиної державної електронної бази з
+            питань освіти. Інформація, що міститься в ЄДЕБО, є доступною у
+            форматі відкритих даних, у тому числі з урахуванням потреб осіб з
+            порушенням зору. Безоплатний і вільний доступ осіб до інформації, що
+            міститься в ЄДЕБО, здійснюється через офіційний веб-сайт:
+            https://info.edbo.gov.ua/
           </p>
         </div>
       </div>
@@ -207,7 +201,7 @@
         <div class="top-buttons">
           <div class="select" id="select-list-1">
             <div class="select-wrapper round-button">
-              <p style="margin-right: 50px">Оберіть ступінь</p>
+              <p style="margin-right: 10px">Оберіть ступінь</p>
               <div class="polygon"></div>
             </div>
             <ul class="dropdown hidden"></ul>
@@ -221,10 +215,78 @@
           <div id="chart-1"></div>
         </div>
       </div>
+      <div class="text">
+        <div class="description collapsible" style="">
+          <div class="collaps-header">
+            <img class="finger-icon" src="img/finger_up.png" />
+            <p>Як читати графік?</p>
+            <div class="circle-plus closed">
+              <div class="circle">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+              </div>
+            </div>
+          </div>
+          <p
+            class="ordinal height-0"
+            style="max-height: 1px; overflow: hidden; margin: 5px 0"
+          >
+            На графіку відображена динаміка студентів ЗВО із розподілом за
+            формаю навчання: навчання за кошти дрежавного бюджету - верхній, або
+            за пошти самих студентів на нижньму. Кольоровими лінами позначена
+            “основа вступу” тобто попередній здобутий освітній ступінь. У
+            спадному меню можна обрати освітній рівень на якому безпосередньо
+            навчається студент. Наприклад за замовчуванням обрано рівень -
+            “Бакалавр”, відповідно більшість студентів до цього мали повну
+            загальну середню освіту, частина студентів, які навчаються “на
+            бюджеті” - рівень молодшого спеціаліста лише незначна частина -
+            також рівень бакалавра (адже навчатись здобувати освітній ступінь за
+            бюджетні кошти можна лише раз).
+          </p>
+        </div>
+      </div>
+
+      <div class="text">
+        <h2 class="chapter">Тернистий шлях реформ</h2>
+        <p>
+          Постанова Кабміну впроваджувала експериментальні правила продажу
+          необробленої деревини на період з 1 лютого 2020-го по 1 квітня 2021
+          року. Лісгоспи зустріли такі новації дещо насторожено, але
+          <a href="https://timber.prozorro.sale/#/">відкриті дані</a>
+          Prozorro.Продажі свідчать, що електронні аукціони з продажу деревини
+          почали з&rsquo;являтися в системі фактично одразу після офіційного
+          початку експерименту.&nbsp;
+        </p>
+        <p>
+          У березні 2020-го оголошена вартість деревини, яку виставили на
+          продаж, сягнула майже 450 млн грн. Однак лише трохи більш як 5% від
+          усіх аукціонів, що відбувалися з лютого по серпень 2020-го,
+          завершились успішним підписанням контрактів із постачання необробленої
+          деревини.
+        </p>
+      </div>
+
+      <div class="big-stats">
+        <div class="stats-cell">
+          <div class="stats-number">58%</div>
+          <div class="stats-label">
+            доцентів, викладачів та професорів приватних ЗВО - сумісники
+          </div>
+        </div>
+        <div class="stats-cell">
+          <div class="stats-number">106</div>
+          <div class="stats-label">самостійних приватних ЗВО в Україні</div>
+        </div>
+        <div class="stats-cell">
+          <div class="stats-number">000</div>
+          <div class="stats-label">тут картка показника</div>
+        </div>
+      </div>
+
       <div class="top-buttons">
         <div class="select" id="select-list-2">
           <div class="select-wrapper round-button">
-            <p style="margin-right: 50px">Оберіть форму власності</p>
+            <p style="margin-right: 10px">Оберіть форму власності</p>
             <div class="polygon"></div>
           </div>
           <ul class="dropdown hidden"></ul>
@@ -245,6 +307,31 @@
             <div class="labels-region hidden-label"></div>
             <div class="tot_usbl_vol graph"></div>
           </div>
+        </div>
+      </div>
+      <div class="text">
+        <div class="description collapsible" style="margin-top: 400px">
+          <div class="collaps-header">
+            <img class="finger-icon" src="img/finger_up.png" />
+            <p>Як читати графік?</p>
+            <div class="circle-plus closed">
+              <div class="circle">
+                <div class="horizontal"></div>
+                <div class="vertical"></div>
+              </div>
+            </div>
+          </div>
+          <p
+            class="ordinal height-0"
+            style="max-height: 1px; overflow: hidden; margin: 5px 0"
+          >
+            На графіку вище відображене порівняння кількості викладачів та
+            наукових співробітників, які працюють у державних, комунальних та
+            приватних ЗВО, а також стаж їх роботи. Ви можете обрати тип
+            навчального закладу із відповідного меню та порівняти кількість
+            співробітників на відповідних посадах, а також їх середній досвід
+            роботи.
+          </p>
         </div>
       </div>
 
@@ -282,33 +369,6 @@
             <img style="height: 48px" src="img/logo_mincifra_white.png" />
           </div>
 
-          <!-- Поширити -->
-          <!-- <div class="socio-wrapper">
-            <p>Поширити:</p>
-
-            <div class="socio-icons-box">
-              <a
-                href="https://www.facebook.com/sharer/sharer.php?u=https://texty.org.ua/d/2021/timber_auctions/"
-                target="_blank"
-                class="share-btn"
-              >
-                <div class="icon-wrapper">
-                  <img class="icon-box" src="img/Vector.png" />
-                  <img id="fb" style="" src="img/fb.png" />
-                </div>
-              </a>
-              <a
-                href="https://twitter.com/intent/tweet?text=https://texty.org.ua/d/2021/timber_auctions/"
-                target="_blank"
-                class="share-btn"
-              >
-                <div class="icon-wrapper">
-                  <img class="icon-box" src="img/Vector.png" />
-                  <img id="tw" style="" src="img/tw.png" />
-                </div>
-              </a>
-            </div> -->
-          <!-- </div> -->
           <div class="disclaimer">
             <p>
               The website is created within the Transparency and Accountability
@@ -344,23 +404,21 @@
     <script src="js/main.js"></script>
 
     <script>
-      d3.select(".collapsible").on("click", function () {
-        let circle_plus = d3.select(this).select(".circle-plus");
+      d3.selectAll(".collapsible").on("click", function () {
+        let clickedElement = d3.select(this); // Поточний клікнутий елемент
+        let circle_plus = clickedElement.select(".circle-plus");
         circle_plus.classed("closed", !circle_plus.classed("closed"));
         circle_plus.classed("opened", !circle_plus.classed("opened"));
 
-        let paragraph = d3.select("p.ordinal");
+        let paragraph = clickedElement.select("p.ordinal");
         paragraph.classed("height-0", !paragraph.classed("height-0"));
 
         let collaps_height = window.innerWidth > 990 ? "120px" : "200px";
 
-        d3.select("p.ordinal")
+        paragraph
           .transition()
           .duration(500)
-          .style(
-            "max-height",
-            d3.select("p.ordinal").classed("height-0") ? "1px" : "500px"
-          )
+          .style("max-height", paragraph.classed("height-0") ? "1px" : "500px")
           .style("overflow", "hidden");
       });
     </script>

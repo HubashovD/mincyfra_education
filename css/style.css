@@ -1583,10 +1583,17 @@ rect.selection {
   display: none;
 }
 
-/* Стилі для мобільних пристроїв, де всі блоки в один стовпчик */
-@media (max-width: 800px) {
+@media (max-width: 425px) {
   #legend {
     display: block;
+  }
+}
+
+/* Стилі для мобільних пристроїв, де всі блоки в один стовпчик */
+@media (max-width: 800px) {
+  #legend .auto-added {
+    margin-top: 3px;
+    font-size: 12px;
   }
   .hidden-legend {
     display: block;
@@ -1611,3 +1618,6 @@ rect.selection {
 /* .graph {
   width: 100%;
 } */
+
+.lead {
+}

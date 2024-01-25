@@ -114,8 +114,17 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     var init_data = input[0].filter((d) => d.level == "Бакалавр");
 
     x.domain(d3.extent(init_data, (d) => d.date));
-    y1.domain([0, d3.max(init_data, (d) => d.budget)]);
-    y2.domain([0, d3.max(init_data, (d) => d.contract)]);
+
+    // Знаходження максимальних значень для кожної осі
+    let maxBudget = d3.max(init_data, (d) => d.budget);
+    let maxContract = d3.max(init_data, (d) => d.contract);
+
+    // Вибір найбільшого з двох максимумів
+    let overallMax = d3.max([maxBudget, maxContract]);
+
+    // Встановлення цього максимуму для обох осей
+    y1.domain([0, overallMax]);
+    y2.domain([0, overallMax]);
 
     // Закоментуйте або видаліть наступний рядок, щоб прибрати ось X з першого графіка
     first_chart
@@ -185,21 +194,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       return y2(d.contract);
     });
 
-  function adjustLabelPosition(labels, labelSpacing) {
-    var overlap;
-    do {
-      overlap = false;
-      labels.forEach(function (label, i) {
-        for (var j = i + 1; j < labels.length; j++) {
-          if (Math.abs(label.y - labels[j].y) < labelSpacing) {
-            labels[j].y = label.y + labelSpacing;
-            overlap = true;
-          }
-        }
-      });
-    } while (overlap);
-  }
-
   // CREATE HOVER TOOLTIP WITH VERTICAL LINE //
   tooltip = d3
     .select("#chart-1")
@@ -207,8 +201,7 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     .attr("id", "tooltip")
     .style("position", "absolute")
     .style("background-color", "#D3D3D3")
-    .style("padding", 6)
-    .style("display", "none");
+    .style("padding", 6);
 
   function updateData(level) {
     var filteredData = input[0].filter((d) => d.level === level);
@@ -254,8 +247,19 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       y2 = d3.scaleLinear().range([singleHeight, 0]);
 
     x.domain(d3.extent(filteredData, (d) => d.date));
-    y1.domain([0, d3.max(filteredData, (d) => d.budget)]);
-    y2.domain([0, d3.max(filteredData, (d) => d.contract)]);
+
+    // Знаходження максимальних значень для кожної осі
+    let maxBudget = d3.max(filteredData, (d) => d.budget);
+    let maxContract = d3.max(filteredData, (d) => d.contract);
+
+    // Вибір найбільшого з двох максимумів
+    let overallMax = d3.max([maxBudget, maxContract]);
+
+    // Встановлення цього максимуму для обох осей
+    y1.domain([0, overallMax]);
+    y2.domain([0, overallMax]);
+    // y1.domain([0, d3.max(filteredData, (d) => d.budget)]);
+    // y2.domain([0, d3.max(filteredData, (d) => d.contract)]);
 
     var xAxis = d3
         .axisBottom(x)
@@ -408,7 +412,7 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
         tooltips.forEach(function (t) {
           if (Math.abs(t.y - yPosition) < 20) {
             // 20 - мінімальна відстань між текстами
-            yPosition = t.y < yPosition ? yPosition + 40 : yPosition - 40; // Зсув тексту вгору або вниз
+            // yPosition = t.y < yPosition ? yPosition + 10 : yPosition - 10; // Зсув тексту вгору або вниз
             xPosition = t.x < xPosition ? xPosition + 10 : xPosition - 10; // Зсув тексту вліво або вправо
           }
           yPosition = yPosition - 7;
