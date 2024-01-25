@@ -57,7 +57,7 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     p.exit().remove();
   }
 
-  var margin = { top: 30, right: 50, bottom: 30, left: 50 },
+  var margin = { top: 30, right: 30, bottom: 30, left: 70 },
     width =
       d3.select("#chart-1").node().getBoundingClientRect().width -
       margin.left -
@@ -139,8 +139,35 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       .attr("transform", "translate(0," + singleHeight + ")")
       .call(xAxis);
 
-    first_chart.append("g").attr("class", "y axis").call(yAxisLeft);
-    second_chart.append("g").attr("class", "y axis").call(yAxisRight);
+    first_chart
+      .append("g")
+      .attr("class", "y axis")
+      .call(yAxisLeft)
+      .append("text")
+      .attr("class", "y-axis-label")
+      .attr("text-anchor", "end") // забезпечує правильне вирівнювання тексту
+      .attr("transform", "rotate(-90)") // обертає текст для вертикального відображення
+      .attr("y", -55) // зміщення від осі Y, залежить від вашої конкретної конфігурації
+      .attr("x", -100)
+      .attr("dy", ".75em") // зміщення для вирівнювання тексту, може знадобитись налаштування
+      .style("font-size", "16px") // розмір шрифту
+      .style("fill", "#333") // колір тексту
+      .text("Бюджет"); // текст підпис;
+
+    second_chart
+      .append("g")
+      .attr("class", "y axis")
+      .call(yAxisRight)
+      .append("text")
+      .attr("class", "y-axis-label")
+      .attr("text-anchor", "end") // забезпечує правильне вирівнювання тексту
+      .attr("transform", "rotate(-90)") // обертає текст для вертикального відображення
+      .attr("y", -55) // зміщення від осі Y, залежить від вашої конкретної конфігурації
+      .attr("x", -100)
+      .attr("dy", ".75em") // зміщення для вирівнювання тексту, може знадобитись налаштування
+      .style("font-size", "16px") // розмір шрифту
+      .style("fill", "#333") // колір тексту
+      .text("Контаркт"); // текст підпис;;
 
     return {
       x,
@@ -176,23 +203,23 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
 
   console.log(sumstat);
 
-  var linepath1 = d3
-    .line()
-    .x(function (d) {
-      return x(d.date);
-    })
-    .y(function (d) {
-      return y1(d.budget);
-    });
+  // var linepath1 = d3
+  //   .line()
+  //   .x(function (d) {
+  //     return x(d.date);
+  //   })
+  //   .y(function (d) {
+  //     return y1(d.budget);
+  //   });
 
-  var linepath2 = d3
-    .line()
-    .x(function (d) {
-      return x(d.date);
-    })
-    .y(function (d) {
-      return y2(d.contract);
-    });
+  // var linepath2 = d3
+  //   .line()
+  //   .x(function (d) {
+  //     return x(d.date);
+  //   })
+  //   .y(function (d) {
+  //     return y2(d.contract);
+  //   });
 
   // CREATE HOVER TOOLTIP WITH VERTICAL LINE //
   tooltip = d3
@@ -212,13 +239,13 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
 
     console.log(d3.select("#chart-1").node().getBoundingClientRect().width);
 
-    var margin = { top: 30, right: 150, bottom: 30, left: 50 },
-      width =
-        d3.select("#chart-1").node().getBoundingClientRect().width -
-        margin.left -
-        margin.right,
-      height = 700 - 50 - margin.top - margin.bottom,
-      singleHeight = (height - 50) / 2;
+    var margin = { top: 30, right: 30, bottom: 30, left: 70 };
+    (width =
+      d3.select("#chart-1").node().getBoundingClientRect().width -
+      margin.left -
+      margin.right),
+      (height = 700 - 50 - margin.top - margin.bottom),
+      (singleHeight = (height - 50) / 2);
 
     d3.select("#chart-1")
       .select("svg")
@@ -331,7 +358,8 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       })
       .y(function (d) {
         return y1(d.budget);
-      });
+      })
+      .curve(d3.curveNatural); // Це забезпечує заокруглення лінії;;
 
     var linepath2 = d3
       .line()
@@ -340,7 +368,8 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
       })
       .y(function (d) {
         return y2(d.contract);
-      });
+      })
+      .curve(d3.curveNatural); // Це забезпечує заокруглення лінії;
 
     updateChart(first_chart, sumstat, linepath1, y1, "budget");
     updateChart(second_chart, sumstat, linepath2, y2, "contract");
@@ -412,8 +441,8 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
         tooltips.forEach(function (t) {
           if (Math.abs(t.y - yPosition) < 20) {
             // 20 - мінімальна відстань між текстами
-            // yPosition = t.y < yPosition ? yPosition + 10 : yPosition - 10; // Зсув тексту вгору або вниз
-            xPosition = t.x < xPosition ? xPosition + 10 : xPosition - 10; // Зсув тексту вліво або вправо
+            yPosition = t.y < yPosition ? yPosition + 20 : yPosition; // Зсув тексту вгору або вниз
+            // xPosition = t.x < xPosition ? xPosition + 10 : xPosition - 10; // Зсув тексту вліво або вправо
           }
           yPosition = yPosition - 7;
         });
@@ -422,6 +451,7 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
         if (dataPoint[valueField] !== 0) {
           text
             .text(dataPoint[valueField])
+            .style("font-size", "12px") // Зменшений розмір шрифту
             .style("stroke", "white") // Більш темний відтінок сірого
             .style("stroke-width", "5px") // Збільшена товщина обводки
             .style("stroke-opacity", "0.5") // Збільшена прозорість обводки
@@ -486,7 +516,6 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
           d3.selectAll(".mouse-line").style("opacity", "0");
           d3.selectAll(".mouse-per-line circle").style("opacity", "0");
           d3.selectAll(".mouse-per-line text").style("opacity", "0");
-          d3.selectAll(".tooltip-background").remove(); // Видалення фону тултіпу
         })
         .on("mouseover", function () {
           d3.selectAll(".mouse-line").style("opacity", "1");
