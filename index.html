@@ -38,6 +38,7 @@
     <meta name="title" content="Вища освіта в умовах війнии" />
     <meta name="description" content="Вища освіта в умовах війник" />
     <link href="css/style.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
   </head>
   <body>
     <header>
@@ -215,6 +216,27 @@
           <div id="chart-1"></div>
         </div>
       </div>
+      <div class="chart-legend"></div>
+      <div class="button-container">
+        <div class="color-buttons">
+          <div class="bee-button selected-button" id="downloadButton">
+            <span class="button__text">Завантажити графік</span>
+            <img
+              src="img/download_icon.png"
+              alt="Download"
+              class="button__icon"
+            />
+          </div>
+          <div class="bee-button" id="doc-spec">
+            <span class="button__text">Завантажити дані</span>
+            <img
+              src="img/download_icon.png"
+              alt="Download"
+              class="button__icon"
+            />
+          </div>
+        </div>
+      </div>
       <div class="text">
         <div class="description collapsible" style="">
           <div class="collaps-header">
@@ -310,7 +332,7 @@
         </div>
       </div>
       <div class="text">
-        <div class="description collapsible" style="margin-top: 400px">
+        <div class="description collapsible mobile-lolipop-collapse">
           <div class="collaps-header">
             <img class="finger-icon" src="img/finger_up.png" />
             <p>Як читати графік?</p>
@@ -439,6 +461,22 @@
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(ga, s);
       })();
+    </script>
+    <script>
+      document
+        .getElementById("downloadButton")
+        .addEventListener("click", function () {
+          html2canvas(document.querySelector(".background")).then((canvas) => {
+            // Створюємо тег <a>, щоб імітувати завантаження
+            let downloadLink = document.createElement("a");
+            downloadLink.setAttribute("download", "chart.png");
+            // Конвертуємо зображення в data URL
+            let dataURL = canvas.toDataURL("image/png");
+            downloadLink.setAttribute("href", dataURL);
+            // Імітуємо клік для початку завантаження
+            downloadLink.click();
+          });
+        });
     </script>
   </body>
 </html>

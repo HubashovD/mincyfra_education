@@ -197,7 +197,7 @@ body {
   margin-top: 100px;
   width: 100dvw;
   grid-column: 1/-1;
-  margin-bottom: 10px;
+  margin-bottom: 110px;
 }
 
 .hr-lite {
@@ -1588,7 +1588,9 @@ rect.selection {
     display: block;
   }
 }
-
+.mobile-lolipop-collapse {
+  margin-top: 400px;
+}
 /* Стилі для мобільних пристроїв, де всі блоки в один стовпчик */
 @media (max-width: 800px) {
   #legend .auto-added {
@@ -1613,6 +1615,9 @@ rect.selection {
   .descktop-hidden {
     display: none;
   }
+  .mobile-lolipop-collapse {
+    margin-top: 0px;
+  }
 }
 
 /* .graph {
@@ -1620,4 +1625,86 @@ rect.selection {
 } */
 
 .lead {
+}
+
+.button {
+  background-color: #000000; /* Black background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Some padding */
+  border: none; /* No borders */
+  border-radius: 20px; /* Rounded corners */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  text-align: center; /* Center the text */
+}
+
+.button:hover {
+  background-color: #555555; /* Dark grey background on hover */
+}
+
+.button:active {
+  background-color: #333333; /* Even darker background when clicked */
+}
+
+.button__text {
+  font-family: Arial, sans-serif; /* The font family used in the button */
+  font-weight: bold; /* Make the font bold */
+}
+
+.button__icon {
+  margin-right: 5px; /* Space between icon and text */
+  vertical-align: middle; /* Align icon with text */
+  width: 15px; /* Set the width of the icon */
+  margin-left: 10px;
+}
+
+.color-buttons {
+  font-family: e-UkraineLight;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-direction: row;
+  margin-bottom: 26px;
+}
+
+.bee-button {
+  font-family: e-UkraineLight;
+  -webkit-box-direction: normal;
+  margin: 0;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  font-size: 1em;
+  border: 2px solid black;
+  border-radius: 40px;
+  padding: 12px 28px;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  margin-right: 0.5em;
+}
+
+.button-container .color-buttons .selected-button {
+  background-color: black;
+  color: white;
+}
+
+.button-container .color-buttons .bee-button:hover {
+  background-origin: border-box;
+  border: 2px solid transparent;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#4f4fff),
+    to(#bb829e)
+  );
+  background-image: linear-gradient(90deg, #4f4fff, #bb829e);
+}
+
+#downloadButton {
+  background-color: black !important;
+  color: white !important;
 }
