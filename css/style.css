@@ -1671,7 +1671,7 @@ rect.selection {
 }
 
 .color-buttons {
-  font-family: e-UkraineLight;
+  font-family: "e-Ukraine-Light";
   margin: 0;
   padding: 0;
   display: flex;
@@ -1682,7 +1682,7 @@ rect.selection {
 }
 
 .bee-button {
-  font-family: e-UkraineLight;
+  font-family: "e-Ukraine-Light";
   -webkit-box-direction: normal;
   margin-top: 1dvh;
   display: flex;

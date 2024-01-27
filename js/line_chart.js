@@ -1,4 +1,4 @@
-Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
+Promise.all([d3.csv("data/educators.csv")]).then(function (input) {
   var parseDate = d3.timeParse("%Y-%m-%d");
 
   var bisect = d3.bisector(function (d) {

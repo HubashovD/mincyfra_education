@@ -548,7 +548,7 @@ const createLollipopChart = function (
 };
 
 const sanCompareChart2 = function () {
-  d3.csv("data/fig_6_san_v3.csv", rowConverterData).then(function (data) {
+  d3.csv("data/staff.csv", rowConverterData).then(function (data) {
     let defaultRegion = "Державна";
     defaultRegionData = data.filter((d) => d["region"] === defaultRegion);
     defaultRegionData.sort(function (a, b) {
