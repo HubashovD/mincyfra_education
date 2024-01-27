@@ -52,7 +52,9 @@ const createLollipopChart = function (
   w = box.node().getBoundingClientRect().width;
   // h = box.node().getBoundingClientRect().height
 
-  h = (20 + 20 * 0.3) * dataset.length + 50;
+  console.log(w);
+
+  h = (20 + 20 * 0.3) * dataset.length;
 
   var padding =
     box.node().parentNode.getBoundingClientRect().width >= 768 && c2
@@ -65,6 +67,7 @@ const createLollipopChart = function (
     xVals = dataset.map((d) => d[c1]);
   }
 
+  console.log(w);
   let xScale = d3
     .scaleLinear()
     .domain([0, d3.max(xVals)])
@@ -84,7 +87,10 @@ const createLollipopChart = function (
     .paddingOuter(0.1);
 
   if (!reset) {
-    svg = box.append("svg").attr("width", w).attr("height", h);
+    svg = box
+      .append("svg")
+      .attr("width", w)
+      .attr("height", h + 50);
 
     if (drawLabels) {
       svgLabels = d3
@@ -224,6 +230,15 @@ const createLollipopChart = function (
       .attr("transform", "translate(0," + (h - padding.bottom + 5) + ")")
       .call(xAxis);
 
+    svg
+      .select(".axis.x")
+      .call(xAxis)
+      .selectAll(".tick text")
+      .style("text-anchor", "end")
+      .attr("dx", "-.8em")
+      .attr("dy", ".15em")
+      .attr("transform", "rotate(-45)");
+
     if (c1 == "tot_usbl_vol.san") {
       svg
         .append("g")
@@ -238,14 +253,22 @@ const createLollipopChart = function (
         )
         .append("text")
         .transition()
-        .duration(800)
-        .text("Тис. куб. м. деревини");
+        .duration(800);
+      // .text("Тис. куб. м. деревини");
     }
   } else {
-    svgBeforeHeight = box.select("svg").node().getBBox().height;
-    svg = box.select("svg").attr("height", h);
+    svgBeforeHeight = box.select("svg").node().getBBox().height + 50;
+    //  svg = box.append("svg").attr("width", w).attr("height", h);
+    svg = box
+      .select("svg")
+      .attr("width", w)
+      .attr("height", h + 50);
 
-    svg.transition().duration(800).attr("height", h);
+    svg
+      .transition()
+      .duration(800)
+      .attr("height", h + 50)
+      .attr("width", w);
 
     svg
       .select(".axis.x")
@@ -563,7 +586,7 @@ const sanCompareChart2 = function () {
       (textAnchor = "start"),
       (drawLabels = true),
       (smooth = true),
-      (yPadding = 32)
+      (yPadding = 100)
     );
 
     boxRight = d3.select(".solid-san-grid#ssg2 .tot_usbl_vol");
@@ -577,7 +600,7 @@ const sanCompareChart2 = function () {
       (textAnchor = "start"),
       (drawLabels = false),
       (smooth = true),
-      (yPadding = 32)
+      (yPadding = 100)
     );
 
     d3.select("#select-list-2")
@@ -631,6 +654,7 @@ const sanCompareChart2 = function () {
       regionData.sort(function (a, b) {
         return b["tot_records"] - a["tot_records"];
       });
+      boxRight = d3.select(".solid-san-grid#ssg2 .tot_usbl_vol");
 
       createLollipopChart(
         regionData,

@@ -149,7 +149,7 @@ body {
 .round-button {
   padding: 5px 10px;
   border-radius: 20px;
-  background-color: #e5ebe6;
+  /* background-color: #e5ebe6; */
   font-family: "e-Ukraine-Regular", sans-serif;
   border: 1px solid black;
   width: max-content;
@@ -170,7 +170,7 @@ body {
   position: absolute;
   top: 50px;
   left: 0;
-  height: 150px;
+  /* height: 150px; */
   overflow-y: scroll;
 }
 .select .hidden {
@@ -362,7 +362,7 @@ footer .logo-wrapper {
   margin: auto;
   display: flex;
   align-items: center;
-  /* background-color: rgba(255, 255, 255, 0.7); */
+  min-height: 150px;
 }
 
 footer .logo-wrapper .logo-list {
@@ -375,6 +375,7 @@ footer .logo-wrapper .logo-list {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 150px;
 }
 
 @media (max-width: 991px) {
@@ -414,6 +415,7 @@ footer .logo-wrapper .logo-list img {
   margin: 0 1em 0 0;
   display: block;
   width: auto;
+  margin: 2px;
 }
 @media (max-width: 991px) {
   header .logo-wrapper .logo-list img {
@@ -1250,7 +1252,7 @@ footer .socio-wrapper #tw {
 .collapsible {
   grid-column: 1/3;
   width: 70%;
-  margin-top: 100px;
+  /* margin-top: 100px; */
   cursor: pointer;
   padding: 20px;
   border: double 2px transparent;
@@ -1551,6 +1553,13 @@ rect.selection {
   padding: 0;
   max-width: 1680px;
   margin: 0 auto 0 auto;
+  height: 500px;
+}
+
+@media (max-width: 1000px) {
+  .solid-san-charts {
+    height: 1000px;
+  }
 }
 
 #legend {
@@ -1589,10 +1598,17 @@ rect.selection {
   }
 }
 .mobile-lolipop-collapse {
-  margin-top: 400px;
+  /* margin-top: 400px; */
+}
+
+@media (max-width: 1000px) {
+  .solid-san-grid {
+    grid-template-columns: 1fr 3fr;
+    margin-left: 30px;
+  }
 }
 /* Стилі для мобільних пристроїв, де всі блоки в один стовпчик */
-@media (max-width: 800px) {
+@media (max-width: 1000px) {
   #legend .auto-added {
     margin-top: 3px;
     font-size: 12px;
@@ -1605,10 +1621,6 @@ rect.selection {
   .tot_usbl_vol {
   }
 
-  .solid-san-grid {
-    grid-template-columns: 1fr 3fr;
-    margin-left: 30px;
-  }
   .hidden-label {
     display: block;
   }
@@ -1672,7 +1684,7 @@ rect.selection {
 .bee-button {
   font-family: e-UkraineLight;
   -webkit-box-direction: normal;
-  margin: 0;
+  margin-top: 1dvh;
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -1684,6 +1696,22 @@ rect.selection {
   background-color: black;
   color: white;
   margin-right: 0.5em;
+}
+
+@media (max-width: 800px) {
+  .color-buttons {
+    display: block;
+  }
+  .bee-button {
+    margin-top: 1dvh;
+  }
+}
+
+.button-container {
+  max-width: 700px;
+  /* margin-left: auto; */
+  display: flex;
+  justify-content: center;
 }
 
 .button-container .color-buttons .selected-button {

@@ -201,7 +201,7 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
     })
     .entries(init_data);
 
-  console.log(sumstat);
+  // console.log(sumstat);
 
   // var linepath1 = d3
   //   .line()
@@ -237,7 +237,7 @@ Promise.all([d3.csv("data/educators_pivoted.csv")]).then(function (input) {
 
     updateLegend(levels);
 
-    console.log(d3.select("#chart-1").node().getBoundingClientRect().width);
+    // console.log(d3.select("#chart-1").node().getBoundingClientRect().width);
 
     var margin = { top: 30, right: 30, bottom: 30, left: 70 };
     (width =

@@ -143,7 +143,7 @@
           <a href="https://prozorro.sale/">Prozorro.Продажі</a>.
         </p>
 
-        <div class="description collapsible" style="">
+        <div class="description collapsible" style="margin-top: 50px">
           <div class="collaps-header">
             <img class="finger-icon" src="img/finger_up.png" />
             <p>Що таке ЄДЕБО?</p>
@@ -199,41 +199,52 @@
       </div>
 
       <div class="background">
-        <div class="top-buttons">
-          <div class="select" id="select-list-1">
-            <div class="select-wrapper round-button">
-              <p style="margin-right: 10px">Оберіть ступінь</p>
-              <div class="polygon"></div>
+        <div class="background" id="background">
+          <div class="top-buttons">
+            <div class="select" id="select-list-1">
+              <div class="select-wrapper round-button">
+                <p style="margin-right: 10px">Оберіть ступінь</p>
+                <div class="polygon"></div>
+              </div>
+              <ul class="dropdown hidden"></ul>
             </div>
-            <ul class="dropdown hidden"></ul>
+            <div class="round-button">
+              <p>Вибрано: <span id="selected-region-1">Бакалавр</span></p>
+            </div>
           </div>
-          <div class="round-button">
-            <p>Вибрано: <span id="selected-region-1">Бакалавр</span></p>
+          <div id="legend"></div>
+          <div class="chart-wrapper">
+            <div id="chart-1"></div>
           </div>
+
+          <div class="chart-legend"></div>
         </div>
-        <div id="legend"></div>
-        <div class="chart-wrapper">
-          <div id="chart-1"></div>
-        </div>
-      </div>
-      <div class="chart-legend"></div>
-      <div class="button-container">
-        <div class="color-buttons">
-          <div class="bee-button selected-button" id="downloadButton">
-            <span class="button__text">Завантажити графік</span>
-            <img
-              src="img/download_icon.png"
-              alt="Download"
-              class="button__icon"
-            />
-          </div>
-          <div class="bee-button" id="doc-spec">
-            <span class="button__text">Завантажити дані</span>
-            <img
-              src="img/download_icon.png"
-              alt="Download"
-              class="button__icon"
-            />
+        <div class="button-container">
+          <div class="color-buttons">
+            <div
+              class="bee-button selected-button downloadButton"
+              id="downloadButton"
+              data-target-id="background"
+            >
+              <span class="button__text">Завантажити графік</span>
+              <img
+                src="img/download_icon.png"
+                alt="Download"
+                class="button__icon"
+              />
+            </div>
+            <div
+              class="bee-button download-data-button"
+              id="doc-spec"
+              data-target-id="educators_pivoted.csv"
+            >
+              <span class="button__text">Завантажити дані</span>
+              <img
+                src="img/download_icon.png"
+                alt="Download"
+                class="button__icon"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -304,30 +315,59 @@
           <div class="stats-label">тут картка показника</div>
         </div>
       </div>
-
-      <div class="top-buttons">
-        <div class="select" id="select-list-2">
-          <div class="select-wrapper round-button">
-            <p style="margin-right: 10px">Оберіть форму власності</p>
-            <div class="polygon"></div>
+      <div id="solid-san-charts-download">
+        <div class="top-buttons">
+          <div class="select" id="select-list-2">
+            <div class="select-wrapper round-button">
+              <p style="margin-right: 10px">Оберіть форму власності</p>
+              <div class="polygon"></div>
+            </div>
+            <ul class="dropdown hidden"></ul>
           </div>
-          <ul class="dropdown hidden"></ul>
+          <div class="round-button">
+            <p>Вибрано: <span id="selected-region-2">Державна</span></p>
+          </div>
         </div>
-        <div class="round-button">
-          <p>Вибрано: <span id="selected-region-2">Державна</span></p>
+        <div class="solid-san-charts">
+          <div class="solid-san-charts-wrapper">
+            <div class="solid-san-grid" id="ssg2">
+              <div class="column-header"></div>
+              <div class="column-header">Кількість викладачів</div>
+              <div class="column-header descktop-hidden">Середній стаж</div>
+              <div class="labels-region"></div>
+              <div class="tot_records graph"></div>
+              <div class="column-header hidden-legend">Середній стаж</div>
+              <div class="labels-region hidden-label"></div>
+              <div class="tot_usbl_vol graph"></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="solid-san-charts">
-        <div class="solid-san-charts-wrapper">
-          <div class="solid-san-grid" id="ssg2">
-            <div class="column-header"></div>
-            <div class="column-header">Кількість викладачів</div>
-            <div class="column-header descktop-hidden">Середній стаж</div>
-            <div class="labels-region"></div>
-            <div class="tot_records graph"></div>
-            <div class="column-header hidden-legend">Середній стаж</div>
-            <div class="labels-region hidden-label"></div>
-            <div class="tot_usbl_vol graph"></div>
+      <div class="button-container">
+        <div class="color-buttons">
+          <div
+            class="bee-button selected-button downloadButton"
+            id="downloadButton"
+            data-target-id="solid-san-charts-download"
+          >
+            <span class="button__text">Завантажити графік</span>
+            <img
+              src="img/download_icon.png"
+              alt="Download"
+              class="button__icon"
+            />
+          </div>
+          <div
+            class="bee-button download-data-button"
+            id="downloadlolypop"
+            data-target-id="fig_6_san_v3.csv"
+          >
+            <span class="button__text">Завантажити дані</span>
+            <img
+              src="img/download_icon.png"
+              alt="Download"
+              class="button__icon"
+            />
           </div>
         </div>
       </div>
@@ -357,7 +397,7 @@
         </div>
       </div>
 
-      <div class="text" style="margin-top: 300px">
+      <div class="text">
         <h2 class="chapter">Тернистий шлях реформ</h2>
         <p>
           Постанова Кабміну впроваджувала експериментальні правила продажу
@@ -463,10 +503,12 @@
       })();
     </script>
     <script>
-      document
-        .getElementById("downloadButton")
-        .addEventListener("click", function () {
-          html2canvas(document.querySelector(".background")).then((canvas) => {
+      var buttons = document.getElementsByClassName("downloadButton");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+          var targetId = this.getAttribute("data-target-id");
+          var targetElement = document.querySelector("#" + targetId);
+          html2canvas(targetElement).then((canvas) => {
             // Створюємо тег <a>, щоб імітувати завантаження
             let downloadLink = document.createElement("a");
             downloadLink.setAttribute("download", "chart.png");
@@ -477,6 +519,27 @@
             downloadLink.click();
           });
         });
+      }
+    </script>
+
+    <script>
+      var buttons = document.getElementsByClassName("download-data-button");
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function () {
+          var fileName = this.getAttribute("data-target-id");
+          var filePath = "data/" + fileName; // Шлях до файлу на сервері
+
+          // Створення тимчасового посилання для завантаження
+          var downloadLink = document.createElement("a");
+          downloadLink.href = filePath;
+          downloadLink.download = fileName;
+
+          // Додаємо посилання до документа, імітуємо клік та видаляємо його
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+        });
+      }
     </script>
   </body>
 </html>
